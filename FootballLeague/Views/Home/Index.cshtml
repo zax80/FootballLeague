@@ -1,0 +1,70 @@
+﻿@model IEnumerable<FootballLeague.Models.LeagueStats_Result>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.P)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.W)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.D)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.F)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.A)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pts)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.P)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.W)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.D)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.L)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.F)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.A)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pts)
+        </td>
+    </tr>
+        }
+
+    </table>

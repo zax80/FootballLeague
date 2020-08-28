@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LeagueModelStoreContainer" CdmEntityContainer="LeagueEntities">
+    <EntitySetMapping Name="Matches">
+      <EntityTypeMapping TypeName="LeagueModel.Match">
+        <MappingFragment StoreEntitySet="Matches">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="HomeTeam" ColumnName="HomeTeam" />
+          <ScalarProperty Name="AwayTeam" ColumnName="AwayTeam" />
+          <ScalarProperty Name="HomeScore" ColumnName="HomeScore" />
+          <ScalarProperty Name="AwayScore" ColumnName="AwayScore" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teams">
+      <EntityTypeMapping TypeName="LeagueModel.Team">
+        <MappingFragment StoreEntitySet="Teams">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="LeagueStats" FunctionName="LeagueModel.Store.LeagueStats">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="LeagueModel.LeagueStats_Result">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="P" ColumnName="P" />
+          <ScalarProperty Name="W" ColumnName="W" />
+          <ScalarProperty Name="D" ColumnName="D" />
+          <ScalarProperty Name="L" ColumnName="L" />
+          <ScalarProperty Name="F" ColumnName="F" />
+          <ScalarProperty Name="A" ColumnName="A" />
+          <ScalarProperty Name="GD" ColumnName="GD" />
+          <ScalarProperty Name="Pts" ColumnName="Pts" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

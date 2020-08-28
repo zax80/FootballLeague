@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LeagueModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Matches">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="HomeTeam" Type="int" Nullable="false" />
+          <Property Name="AwayTeam" Type="int" Nullable="false" />
+          <Property Name="HomeScore" Type="int" Nullable="false" />
+          <Property Name="AwayScore" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Matches_Team">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="Matches" Type="Self.Matches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="HomeTeam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matches_Team1">
+          <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+          <End Role="Matches" Type="Self.Matches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="AwayTeam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="LeagueStats" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="LeagueModelStoreContainer">
+          <EntitySet Name="Matches" EntityType="Self.Matches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Matches_Team" Association="Self.FK_Matches_Team">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Matches" EntitySet="Matches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matches_Team1" Association="Self.FK_Matches_Team1">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Matches" EntitySet="Matches" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LeagueModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HomeTeam" Type="Int32" Nullable="false" />
+          <Property Name="AwayTeam" Type="Int32" Nullable="false" />
+          <Property Name="HomeScore" Type="Int32" Nullable="false" />
+          <Property Name="AwayScore" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_Matches_Team" FromRole="Matches" ToRole="Teams" />
+          <NavigationProperty Name="Team1" Relationship="Self.FK_Matches_Team1" FromRole="Matches" ToRole="Teams" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Matches" Relationship="Self.FK_Matches_Team" FromRole="Teams" ToRole="Matches" />
+          <NavigationProperty Name="Matches1" Relationship="Self.FK_Matches_Team1" FromRole="Teams" ToRole="Matches" />
+        </EntityType>
+        <Association Name="FK_Matches_Team">
+          <End Role="Teams" Type="Self.Team" Multiplicity="1" />
+          <End Role="Matches" Type="Self.Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="HomeTeam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Matches_Team1">
+          <End Role="Teams" Type="Self.Team" Multiplicity="1" />
+          <End Role="Matches" Type="Self.Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="AwayTeam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LeagueEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Matches" EntityType="Self.Match" />
+          <EntitySet Name="Teams" EntityType="Self.Team" />
+          <AssociationSet Name="FK_Matches_Team" Association="Self.FK_Matches_Team">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Matches" EntitySet="Matches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Matches_Team1" Association="Self.FK_Matches_Team1">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Matches" EntitySet="Matches" />
+          </AssociationSet>
+          <FunctionImport Name="LeagueStats" ReturnType="Collection(LeagueModel.LeagueStats_Result)" />
+        </EntityContainer>
+        <ComplexType Name="LeagueStats_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="P" Nullable="true" />
+          <Property Type="Int32" Name="W" Nullable="true" />
+          <Property Type="Int32" Name="D" Nullable="true" />
+          <Property Type="Int32" Name="L" Nullable="true" />
+          <Property Type="Int32" Name="F" Nullable="true" />
+          <Property Type="Int32" Name="A" Nullable="true" />
+          <Property Type="Int32" Name="GD" Nullable="true" />
+          <Property Type="Int32" Name="Pts" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LeagueModelStoreContainer" CdmEntityContainer="LeagueEntities">
+          <EntitySetMapping Name="Matches">
+            <EntityTypeMapping TypeName="LeagueModel.Match">
+              <MappingFragment StoreEntitySet="Matches">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="HomeTeam" ColumnName="HomeTeam" />
+                <ScalarProperty Name="AwayTeam" ColumnName="AwayTeam" />
+                <ScalarProperty Name="HomeScore" ColumnName="HomeScore" />
+                <ScalarProperty Name="AwayScore" ColumnName="AwayScore" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="LeagueModel.Team">
+              <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="LeagueStats" FunctionName="LeagueModel.Store.LeagueStats">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LeagueModel.LeagueStats_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="P" ColumnName="P" />
+                <ScalarProperty Name="W" ColumnName="W" />
+                <ScalarProperty Name="D" ColumnName="D" />
+                <ScalarProperty Name="L" ColumnName="L" />
+                <ScalarProperty Name="F" ColumnName="F" />
+                <ScalarProperty Name="A" ColumnName="A" />
+                <ScalarProperty Name="GD" ColumnName="GD" />
+                <ScalarProperty Name="Pts" ColumnName="Pts" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
